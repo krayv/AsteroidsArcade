@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerProjectile : AbstractProjectile
 {
@@ -12,10 +10,14 @@ public class PlayerProjectile : AbstractProjectile
             asteroid.Destroy();
             Destroy();
         }
-    }
-
-    private void Destroy()
-    {
-        Destroy(gameObject);
+        else
+        {
+            NLO nlo = other.GetComponent<NLO>();
+            if (nlo != null)
+            {
+                nlo.Destroy();
+                Destroy();
+            }
+        }    
     }
 }

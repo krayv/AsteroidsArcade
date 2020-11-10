@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 6477720269875632693}
   - component: {fileID: 6477720269875632698}
   - component: {fileID: 6477720269875632699}
-  - component: {fileID: 6477720269875632694}
   - component: {fileID: 5826873905899235868}
-  - component: {fileID: -8573203624539572347}
+  - component: {fileID: 698049232464130698}
+  - component: {fileID: 7860069145433985538}
   m_Layer: 0
-  m_Name: PlayerProjectile
+  m_Name: NLOProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a8aea8034e1ba1a49af48157f8ed1ebd, type: 2}
+  - {fileID: 2100000, guid: 9cdd6c614570e094b907dfbd5483ed60, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -115,22 +115,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6477720269875632694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6477720269875632696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f94bc519d736c444b23d206c6a1ad4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onDestroy:
-    m_PersistentCalls:
-      m_Calls: []
-  _Speed: 4
 --- !u!114 &5826873905899235868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +127,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca89da528badc304385c71c14db66f70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!82 &-8573203624539572347
+--- !u!114 &698049232464130698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6477720269875632696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14fac1360fedf8a4d9d87fb79027d393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDestroy:
+    m_PersistentCalls:
+      m_Calls: []
+  _Speed: 4
+--- !u!82 &7860069145433985538
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,7 +153,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f90bf82757eaaa2438731da06a07b120, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 26df3726e9bfd2e4ea5b66d8208de3d1, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

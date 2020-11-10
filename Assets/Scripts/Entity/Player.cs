@@ -1,10 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
+using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody))]
-public class Player : MonoBehaviour, IEntity
+public class Player : AbstractEntity
 {
+
+    public bool isCanBeDestroyed = true;
+
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float shotDelay;
 
@@ -12,28 +13,35 @@ public class Player : MonoBehaviour, IEntity
 
     [SerializeField] private float acceleration;
 
-    [SerializeField] private float rotationSpeed;
+    [SerializeField] private float _rotationSpeed;
+
+    public UnityEvent OnAcceleration;
+    public UnityEvent OnShooting;
+
+    public float rotationSpeed
+    {
+        get { return _rotationSpeed; }
+    }
 
     private InputController inputController;
     private Rigidbody playerRigidbody;
     private float currentDelay;
 
-    public void Destroy()
+    public override void Destroy()
     {
-        Destroy(gameObject);
+        if(!isCanBeDestroyed)
+        {
+            return;
+        }
         inputController.OnPressAccelerationButton.RemoveListener(Accelerate);
         inputController.OnPressHorizontalButton.RemoveListener(Rotate);
         inputController.OnPressShotButton.RemoveListener(Shot);
-    }
-
-    public void SetNewPositionOnCrossingBorder(Vector3 newPosition)
-    {
-        transform.position = newPosition;
+        base.Destroy();
     }
 
     private void Awake()
     {
-        GameObject gameControllers = GameObject.FindGameObjectWithTag(TagsAndLayers.GameController);
+        GameObject gameControllers = GameObject.FindGameObjectWithTag(TagsAndLayers.GameControllerTag);
         inputController = gameControllers.GetComponent<InputController>();
         playerRigidbody = GetComponent<Rigidbody>();
     }
@@ -61,6 +69,7 @@ public class Player : MonoBehaviour, IEntity
             newProjectile.transform.position = transform.position;
             newProjectile.transform.rotation = transform.rotation;
             currentDelay = shotDelay;
+            OnShooting.Invoke();
         }       
     }
 
@@ -71,9 +80,10 @@ public class Player : MonoBehaviour, IEntity
         {
             playerRigidbody.AddForce(transform.up * acceleration);
         }
+        OnAcceleration.Invoke();
     }
-    private void Rotate(float rotateValue)
+    public void Rotate(float rotateValue)
     {
-        playerRigidbody.transform.Rotate(0f, 0f, rotateValue * rotationSpeed);
+        playerRigidbody.transform.Rotate(0f, 0f, rotateValue * rotationSpeed * Time.deltaTime);
     }
 }

@@ -1,21 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody))]
-public class AbstractProjectile : MonoBehaviour, IEntity
+public class AbstractProjectile : AbstractEntity
 {
 
     [SerializeField] float _Speed;
 
     private Rigidbody currentRigidbody;
 
-    public void Destroy()
-    {
-        Destroy(gameObject);
-    }
-
-    public void SetNewPositionOnCrossingBorder(Vector3 newPosition)
+    public override void SetNewPositionOnCrossingBorder(Vector3 newPosition)
     {
         Destroy();
     }

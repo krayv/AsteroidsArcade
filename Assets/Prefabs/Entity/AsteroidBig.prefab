@@ -14,7 +14,10 @@ GameObject:
   - component: {fileID: 5860718964952295965}
   - component: {fileID: 6228695561695917899}
   - component: {fileID: -3575050301529086225}
-  m_Layer: 0
+  - component: {fileID: 1656736477170532037}
+  - component: {fileID: -6164164131887594655}
+  - component: {fileID: -5732612659767421547}
+  m_Layer: 8
   m_Name: AsteroidBig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +128,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a12daf4351507a4a848faf1c1fb97d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onDestroy:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5732612659767421547}
+        m_TargetAssemblyTypeName: SoundController, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   sharpAsteroidPrefab: {fileID: 5860718964952295954, guid: cf1f91ed3b0db5e47935787b098b9df6, type: 3}
   _sharpCount: 2
   _maxSpeed: 125
   _minSpeed: 50
+--- !u!114 &1656736477170532037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860718964952295954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad4708e7a4c058b48bcac3f09a7126bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6164164131887594655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860718964952295954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2b493ac1a890e44a1b2afa2f9e4ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreForThis: 20
+--- !u!114 &-5732612659767421547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860718964952295954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8488c53811fa61a44bdf5ee37fc8cf02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: c66667443b9d83745a22fdae15b2741d, type: 3}

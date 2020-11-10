@@ -13,9 +13,12 @@ GameObject:
   - component: {fileID: 5860718964952295964}
   - component: {fileID: 5860718964952295965}
   - component: {fileID: 6228695561695917899}
-  - component: {fileID: -3575050301529086225}
+  - component: {fileID: 4351281446192502846}
+  - component: {fileID: 4350395533226130162}
+  - component: {fileID: 2698585381495573627}
+  - component: {fileID: -356691849157389360}
   m_Layer: 8
-  m_Name: AsteroidMedium 1
+  m_Name: AsteroidMedium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,7 +116,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-3575050301529086225
+--- !u!114 &4351281446192502846
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +128,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a12daf4351507a4a848faf1c1fb97d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onDestroy:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -356691849157389360}
+        m_TargetAssemblyTypeName: SoundController, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   sharpAsteroidPrefab: {fileID: 5860718964952295954, guid: 8d6ad56c3cc7b024c8364a47c0462889, type: 3}
   _sharpCount: 2
   _maxSpeed: 125
   _minSpeed: 50
+--- !u!114 &4350395533226130162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860718964952295954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad4708e7a4c058b48bcac3f09a7126bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2698585381495573627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860718964952295954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2b493ac1a890e44a1b2afa2f9e4ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreForThis: 50
+--- !u!114 &-356691849157389360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860718964952295954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8488c53811fa61a44bdf5ee37fc8cf02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: 05798d5fe4b67db4484dc859d88a4c96, type: 3}

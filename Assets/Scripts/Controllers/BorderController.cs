@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BorderController : MonoBehaviour
@@ -9,35 +8,42 @@ public class BorderController : MonoBehaviour
     private float xResolution { get { return Screen.width; } }
     private float yResolution { get { return Screen.height; } }
 
-    [SerializeField] private List<GameObject> gameObjectsForChecking;
+    private Dictionary<GameObject, AbstractEntity> gameObjectsForChecking = new Dictionary<GameObject, AbstractEntity>();
+
+    private List<GameObject> deletedObjects = new List<GameObject>();
     
-    public void AddGameObjectForCheck(GameObject gameObject)
+    public void AddGameObjectForCheck(GameObject gameObject, AbstractEntity entity)
     {
-        gameObjectsForChecking.Add(gameObject);
+        gameObjectsForChecking.Add(gameObject, entity);
+        entity.onDestroy.AddListener(RemoveEnityForCheking);
     }
 
     public void RemoveEnityForCheking(GameObject gameObject)
     {
-        gameObjectsForChecking.Remove(gameObject);
+        deletedObjects.Add(gameObject);
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
-        foreach(GameObject checkedGameObject in gameObjectsForChecking)
+        foreach(GameObject checkedGameObject in gameObjectsForChecking.Keys)
         {
-            Vector3 currentPositionOnScreen = mainCamera.WorldToScreenPoint(checkedGameObject.transform.position);
-            if(IsCrossedBorder(currentPositionOnScreen.x, xResolution))
+            if (!deletedObjects.Contains(checkedGameObject))
             {
-                SetNewXPosition(checkedGameObject, currentPositionOnScreen);
-                continue;
-            }
-            if(IsCrossedBorder(currentPositionOnScreen.y, yResolution))
-            {
-                SetNewYPosition(checkedGameObject, currentPositionOnScreen);
-                continue;
-            }
+                Vector3 currentPositionOnScreen = mainCamera.WorldToScreenPoint(checkedGameObject.transform.position);
+                if (IsCrossedBorder(currentPositionOnScreen.x, xResolution))
+                {
+                    SetNewXPosition(checkedGameObject, currentPositionOnScreen);
+                    continue;
+                }
+                if (IsCrossedBorder(currentPositionOnScreen.y, yResolution))
+                {
+                    SetNewYPosition(checkedGameObject, currentPositionOnScreen);
+                    continue;
+                }
+            }      
         }
+        ClearObjects();
     }
 
     private bool IsCrossedBorder(float gameObjectAxisValue, float borderAxisValue)
@@ -58,7 +64,7 @@ public class BorderController : MonoBehaviour
             newPosition = mainCamera.ScreenToWorldPoint(new Vector3(currentPositionOnScreen.x, 0, 0f));
         }
         newPosition = ClearZPosition(newPosition);
-        checkedGameObject.transform.position = newPosition;
+        gameObjectsForChecking[checkedGameObject].SetNewPositionOnCrossingBorder(newPosition);
     }
 
     private void SetNewXPosition(GameObject checkedGameObject, Vector3 currentPositionOnScreen)
@@ -73,11 +79,19 @@ public class BorderController : MonoBehaviour
             newPosition = mainCamera.ScreenToWorldPoint(new Vector3(0, currentPositionOnScreen.y, 0f));
         }
         newPosition = ClearZPosition(newPosition);
-        checkedGameObject.transform.position = newPosition;
+        gameObjectsForChecking[checkedGameObject].SetNewPositionOnCrossingBorder(newPosition);
     }
 
     private Vector3 ClearZPosition(Vector3 position)
     {
         return new Vector3(position.x, position.y, 0f);
+    }
+
+    private void ClearObjects()
+    {
+        foreach(GameObject deletedObject in deletedObjects)
+        {
+            gameObjectsForChecking.Remove(deletedObject);
+        }
     }
 }

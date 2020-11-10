@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody))]
-public class Asteroid : MonoBehaviour, IEntity
+public class Asteroid : AbstractEntity
 {
     [SerializeField] private GameObject sharpAsteroidPrefab;
 
@@ -29,18 +27,18 @@ public class Asteroid : MonoBehaviour, IEntity
     private Rigidbody currentRigidbody;
     private bool IsSpeedSeted;
 
-    public void Destroy()
+    public override void Destroy()
     {
         if(sharpAsteroidPrefab != null)
         {
             SpawnAsteroids();
         }
-        Destroy(gameObject);
+        base.Destroy();
     }
 
-    public void SetNewPositionOnCrossingBorder(Vector3 newPosition)
+    private void DestroyWithoutSharp()
     {
-        transform.position = newPosition;
+        base.Destroy();
     }
 
     private void Awake()
@@ -66,7 +64,7 @@ public class Asteroid : MonoBehaviour, IEntity
             Asteroid asteroid = newAsteroid.GetComponent<Asteroid>();
             asteroid.Speed = newSpeed;
             newAsteroid.transform.position = gameObject.transform.position;
-            newAsteroid.transform.rotation =  Quaternion.Euler(0f, 0f, (gameObject.transform.rotation.z - 45f) + (i * 90f));
+            newAsteroid.transform.rotation =  Quaternion.Euler(0f, 0f, (gameObject.transform.rotation.eulerAngles.z - 45f) + (i * 90f));
         }
         
     }
@@ -75,5 +73,25 @@ public class Asteroid : MonoBehaviour, IEntity
     {
         return Random.Range(_minSpeed, _maxSpeed);
     }
- 
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Player player = collision.transform.GetComponent<Player>();
+        if (player != null)
+        {
+            player.Destroy();
+            DestroyWithoutSharp();
+        }
+        else
+        {
+            NLO nlo = collision.transform.GetComponent<NLO>();
+            if(nlo != null)
+            {
+                nlo.Destroy();
+                DestroyWithoutSharp();
+            }
+        }
+        
+    }
+
 }

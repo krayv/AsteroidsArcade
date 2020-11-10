@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class InputController : MonoBehaviour
@@ -10,25 +8,61 @@ public class InputController : MonoBehaviour
     public UnityEvent OnPressAccelerationButton;
     public UnityEvent OnPressShotButton;
 
-    // Update is called once per frame
     private void Update()
     {
         float horizontalAxisValue = Input.GetAxisRaw("Horizontal");
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if(!StaticVars.isGameOnPause)
         {
-            OnPause.Invoke();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                OnPause.Invoke();
+            }
+            if (CheckRotatesButtons(horizontalAxisValue))
+            {
+                OnPressHorizontalButton.Invoke(horizontalAxisValue);
+            }
+            if (CheckAccelerationsButton())
+            {
+                OnPressAccelerationButton.Invoke();
+            }
+            if (CheckShotButton())
+            {
+                OnPressShotButton.Invoke();
+            }
+        }       
+    }
+
+    private bool CheckRotatesButtons(float horizontalAxisValue)
+    {
+        if(StaticVars.controllMode == ControllMode.Keyboard)
+        {
+            return Mathf.Abs(horizontalAxisValue) > 0f;
         }
-        if(Mathf.Abs(horizontalAxisValue) > 0f)
+        else
         {
-            OnPressHorizontalButton.Invoke(horizontalAxisValue);
+            return false;
         }
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+    }
+    private bool CheckAccelerationsButton()
+    {
+        if (StaticVars.controllMode == ControllMode.Keyboard)
         {
-            OnPressAccelerationButton.Invoke();
+            return Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
         }
-        if(Input.GetKeyDown(KeyCode.Space))
+        else
         {
-            OnPressShotButton.Invoke();
+            return Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetMouseButton(1);
+        }
+    }
+    private bool CheckShotButton()
+    {
+        if (StaticVars.controllMode == ControllMode.Keyboard)
+        {
+            return Input.GetKeyDown(KeyCode.Space);
+        }
+        else
+        {
+            return Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
         }
     }
 }
