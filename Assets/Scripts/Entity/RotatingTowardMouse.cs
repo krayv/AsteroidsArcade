@@ -19,10 +19,9 @@ public class RotatingTowardMouse : MonoBehaviour
             Vector3 mousePoint = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             Vector3 targetDir = mousePoint - transform.position;
             float angle = Vector3.SignedAngle(targetDir, transform.up, Vector3.forward);
-            //float angle = Vector2.SignedAngle(transform.up * -1f, mousePoint);
             if (Mathf.Abs(angle) > minAngleDeltaToRotate)
             {
-                player.Rotate(angle < 0f ? 1f : -1f);
+                player.Rotate(angle < 0f ? -1f : 1f);
             }
         }        
     }

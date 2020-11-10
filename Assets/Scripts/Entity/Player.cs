@@ -84,6 +84,6 @@ public class Player : AbstractEntity
     }
     public void Rotate(float rotateValue)
     {
-        playerRigidbody.transform.Rotate(0f, 0f, rotateValue * rotationSpeed * Time.deltaTime);
+        playerRigidbody.transform.Rotate(0f, 0f, -rotateValue * rotationSpeed * Time.deltaTime);
     }
 }
